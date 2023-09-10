@@ -44,7 +44,7 @@ class Main():
             remove_tower = False
         self.options['rt'] = remove_tower
 
-        ratio = input('Type Overrap Ratio (0 to 100) ... ')
+        ratio = input('Type Overrap Ratio (0 to 100, 70 recommended) ... ')
         if not ratio.isdigit(): # ratio isn't a number #
             print('Unexpected \'ratio\' Found')
             os.system('pause')
@@ -79,32 +79,46 @@ class Main():
 
     def record(self):
         global source
+        data_list = []
         self.record_data = {}
         self.source = BeautifulSoup(source, 'html.parser')
         self.elements = self.source.find_all(class_='grid-item-container game-card-container')
 
+        # Collecting Names #
         for element in self.elements:
-
             div = element.find(class_='game-card-name game-name-title')
             div_text = self.restrict_string(div.text)
+            data_list.append(div_text)
+        
+        data_list = sorted(data_list, key=len)
 
-            if not div_text in self.record_data: # If the name is not in the data #
-                
-                found = False # It means whether there is similar name or not #
-                found_name = ''
+        # Removing '' Items #
+        while("" in data_list):
+            data_list.remove("")
+
+        # Transfering List to Dictionary #
+        for text in data_list:
+            found = False
+            found_name = ''
+            if not text in self.record_data: # If the name is not in the data #
                 for name in self.record_data:
-                    if SequenceMatcher(None, div_text, name).ratio() > self.options['ratio']:
+                    if SequenceMatcher(None, text, name).ratio() > self.options['ratio']:
                         found = True
                         found_name = name
+                        print(f'{text} is included in {name}')
                         break
-                
-                if found:
-                    self.record_data[found_name] += 1
-                else:
-                    self.record_data[div_text] = 1
+            else:
+                found = True
+                found_name = text
+            
+            if found:
+                self.record_data[found_name] += 1
+            else:
+                self.record_data[text] = 1
 
         with open("record.json", "w", encoding='utf-8') as file:
             json.dump(self.record_data, file, indent=2, ensure_ascii=False)
+        print('Recorded Html')
 
 
 class WebDriver():
