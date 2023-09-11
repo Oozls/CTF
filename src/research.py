@@ -6,7 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from threading import Thread
 from difflib import SequenceMatcher
-import os, time, json
+import os, time, json, sys
 
 class Main():
     def __init__(self):
@@ -14,7 +14,10 @@ class Main():
         print('CTF Research Mode\n')
 
         # Setting Location #
-        self.dir_path = os.path.split(__file__)[0]
+        if getattr(sys, 'frozen', False):
+            self.dir_path = os.path.split(sys.executable)[0]
+        else:
+            self.dir_path = os.path.split(__file__)[0]
         self.record_path = os.path.join(self.dir_path, 'record.json')
 
         # Setting Url and Keyword #

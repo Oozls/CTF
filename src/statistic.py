@@ -4,7 +4,7 @@ from matplotlib import font_manager, rc, rcParams
 from collections import OrderedDict
 import matplotlib.pyplot as plt
 import numpy as np
-import os, json
+import os, sys, json
 
 class Main():
     def __init__(self):
@@ -12,7 +12,10 @@ class Main():
         print('CTF Statistic Mode\n')
 
         # Setting Location #
-        self.dir_path = os.path.split(__file__)[0]
+        if getattr(sys, 'frozen', False):
+            self.dir_path = os.path.split(sys.executable)[0]
+        else:
+            self.dir_path = os.path.split(__file__)[0]
         self.record_path = os.path.join(self.dir_path, 'record.json')
 
         # Setting Options #
