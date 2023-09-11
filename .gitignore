@@ -4,4 +4,6 @@ dist/
 
 *.json
 
+*.spec
+
 __pycache__/
