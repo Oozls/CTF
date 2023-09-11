@@ -62,6 +62,8 @@ class Main():
         self.webdriver = WebDriver(self.full_url, self.hst)
 
         self.record()
+
+        os.system('pause')
     
     def restrict_string(self, text):
         def ok(str1):

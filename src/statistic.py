@@ -42,6 +42,7 @@ class Main():
         print('Loaded Data')
 
         if self.graph_type == '1': self.bar()
+        os.system('pause')
 
     def bar(self):
 
