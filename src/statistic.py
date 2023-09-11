@@ -46,7 +46,7 @@ class Main():
         font_path = "C:/Windows/Fonts/malgunsl.ttf"
         font = font_manager.FontProperties(fname=font_path).get_name()
         rc('font', family=font)
-        rc('xtick', labelsize=8)
+        rc('xtick', labelsize=5)
 
         # Disabling Toolbar #
         rcParams['toolbar'] = 'None'
@@ -57,7 +57,7 @@ class Main():
 
         x = np.arange(len(data))
         plt.bar(x, data.values())
-        plt.xticks(x, data.keys(), rotation=30)
+        plt.xticks(x, data.keys(), rotation=45)
 
         plt.show()
         print('Showed Graph')
